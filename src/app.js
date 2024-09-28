@@ -1,18 +1,39 @@
 /* eslint-disable */
 
 
-let pronoun = ['the', 'our'];
-let adj = ['great', 'big'];
-let noun = ['jogger', 'racoon'];
-const domains = ['com', 'es', 'net']
+const  pronoun = ['the', 'our'];
+const  adj = ['great', 'big'];
+const  noun = ['jogger', 'racoon'];
+const extensions = ['com', 'es', 'onl']
 
-const generateDomain = (arr1,arr2,arr3, domains) =>{
+const hackDomain = (noun, extension) => {
+  const lengthExtension = extension.length
+  const nounFragment = noun.slice( - lengthExtension)
+
+  if(nounFragment === extension){
+    return `.${noun}`
+  }
+
+  const indexFirstChart = noun.lastIndexOf(extension[0])
+
+  if(indexFirstChart !== -1) {
+    let stringToCompare = noun.slice(indexFirstChart)
+
+    if(extension.startsWith(stringToCompare)){
+      return noun.replace(stringToCompare, "." + extension)
+    }
+  }
+  
+  return `${noun}.${extension}`
+  
+}
+
+const generateDomain = (arr1,arr2,arr3, extensions) =>{
   arr1.forEach(pronoun => {
     arr2.forEach(adj => {
       arr3.forEach(noun => {
-        domains.forEach(domain => {
-          console.log(pronoun + adj + noun + '.'+ domain);
-          
+        extensions.forEach(extension => {
+          console.log(pronoun + adj + hackDomain(noun,extension));          
         })
       })
     })
@@ -20,4 +41,5 @@ const generateDomain = (arr1,arr2,arr3, domains) =>{
 
 }
 
-generateDomain(pronoun,adj,noun,domains);
+
+generateDomain(pronoun,adj,noun,extensions);
